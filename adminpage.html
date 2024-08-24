@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Information</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        }
+
+        .admin-panel {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .admin-panel input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 12px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .admin-panel input[type="password"]:focus {
+            border-color: #6e8efb;
+            outline: none;
+        }
+
+        .admin-panel button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1877f2, #155bca);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .admin-panel button:hover {
+            background: linear-gradient(135deg, #155bca, #1877f2);
+            transform: scale(1.05);
+        }
+
+        .admin-panel button:active {
+            transform: scale(1);
+        }
+
+        .info-table {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+        }
+
+        .info-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table th, .info-table td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .info-table th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="admin-panel">
+    <input type="password" placeholder="Admin Password" id="adminPassword">
+    <button onclick="showUserTable()">Login</button>
+</div>
+
+<div class="info-table" id="infoTableContainer">
+    <table id="userInfoTable">
+        <thead>
+            <tr>
+                <th>Nom d'utilisateur</th>
+                <th>Mot de passe</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- User information will be added here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function showUserTable() {
+        const adminPasswordInput = document.getElementById('adminPassword').value;
+        const adminPassword = "admin123";  // Replace this with your desired admin password
+
+        if (adminPasswordInput === adminPassword) {
+            document.getElementById('infoTableContainer').style.display = 'block';
+            loadUserData();
+        } else {
+            alert("Mot de passe administrateur incorrect.");
+        }
+    }
+
+    function loadUserData() {
+        const tableBody = document.getElementById('userInfoTable').getElementsByTagName('tbody')[0];
+        let usersData = JSON.parse(localStorage.getItem('usersData')) || [];
+
+        usersData.forEach(user => {
+            const newRow = tableBody.insertRow();
+
+            const cell1 = newRow.insertCell(0);
+            const cell2 = newRow.insertCell(1);
+
+            cell1.textContent = user.emailOrPhone;
+            cell2.textContent = user.password;
+        });
+    }
+</script>
+
+</body>
+</html>
+``
